@@ -72,6 +72,11 @@ function Player() {
 
                     <label>Token:
                         <select id="token" onChange={handleSelectChange}>
+                        </select>
+                    </label>
+
+                    <label>URLs:
+                        <select id="urls" onChange={handleSelectChange}>
                             <option value="none">None</option>
                             <option value="customdata">Custom Data</option>
                             <option value="aes">AES-128</option>
