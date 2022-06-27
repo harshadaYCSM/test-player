@@ -1,0 +1,12 @@
+.video {
+    position: absolute;
+    height: 40vh;
+    left: 2vw;
+    top: 3vh;
+}
+
+.buttonWrapper {
+    position: absolute;
+    top: 46vh;
+    left: 2vw;
+}
