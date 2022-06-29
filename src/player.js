@@ -1,5 +1,5 @@
 import './player.css'
-import {init} from './playerLibrary'
+import { init } from './playerLibrary'
 
 function Player() {
     let playerType = ""
@@ -20,13 +20,13 @@ function Player() {
     }
 
     const handleSelectChange = (e) => {
-        if(e.target.id === "player") {
+        if (e.target.id === "player") {
             playerType = e.target.value
-        } else if(e.target.id === "stream") {
+        } else if (e.target.id === "stream") {
             streamType = e.target.value
-        } else if(e.target.id === "sDRM") {
+        } else if (e.target.id === "sDRM") {
             sDRMType = e.target.value
-        } else if(e.target.id === "token") {
+        } else if (e.target.id === "token") {
             tokenType = e.target.value
         }
     }
@@ -72,14 +72,15 @@ function Player() {
 
                     <label>Token:
                         <select id="token" onChange={handleSelectChange}>
+                            <option value="none">None</option>
+                            <option value="customdata">Custom Data</option>
+                            <option value="aes">AES-128</option>
                         </select>
                     </label>
 
                     <label>URLs:
                         <select id="urls" onChange={handleSelectChange}>
-                            <option value="none">None</option>
-                            <option value="customdata">Custom Data</option>
-                            <option value="aes">AES-128</option>
+
 
                         </select>
                     </label>
