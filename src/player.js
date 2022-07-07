@@ -41,7 +41,7 @@ function Player() {
             <video className="video" id="video"></video>
             <div className='buttonWrapper'>
                 <button onClick={playMp4}>Play mp4 on Native</button>
-                <button onClick={playHls}>Play hls on Native</button><br></br>
+                <button onClick={playHls}>Play hls on Native</button><br></br><br></br>
                 <form onSubmit={playHere}>
                     <label>Player:
                         <select id="player" onChange={handleSelectChange}>
@@ -52,7 +52,7 @@ function Player() {
                         </select>
                     </label>
 
-                    <label>Stream:
+                    <label>   Stream:
                         <select id="stream" onChange={handleSelectChange}>
                             <option value="hls">hls-m3u8</option>
                             <option value="dash">dash-mpd</option>
@@ -60,7 +60,7 @@ function Player() {
                         </select>
                     </label>
 
-                    <label>Security/DRM:
+                    <label>    Security/DRM:
                         <select id="sDRM" onChange={handleSelectChange}>
                             <option value="none">None</option>
                             <option value="widevine">Widevine</option>
@@ -70,21 +70,17 @@ function Player() {
                         </select>
                     </label>
 
-                    <label>Token:
+                    <label>    Token:
                         <select id="token" onChange={handleSelectChange}>
                             <option value="none">None</option>
                             <option value="customdata">Custom Data</option>
                             <option value="aes">AES-128</option>
                         </select>
                     </label>
-
-                    <label>URLs:
-                        <select id="urls" onChange={handleSelectChange}>
-
-
-                        </select>
+                    <br></br><br></br>
+                    <label>URL:
+                    <input type="text" id="urls"></input>
                     </label>
-
                     <input type="submit" value="Submit" />
 
                 </form>
