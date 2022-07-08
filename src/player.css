@@ -12,3 +12,13 @@
     top: 46vh;
     left: 2vw;
 }
+
+.errorContainer {
+    border-style: groove;
+    border-color: red;
+    position: absolute;
+    height: 17vh;
+    width: 38vw;
+    left: 60vw;
+    top: 3vh;
+}

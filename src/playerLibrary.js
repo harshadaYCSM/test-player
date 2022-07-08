@@ -1,20 +1,22 @@
 /* eslint-disable no-undef */
 import { tokens } from "./constants";
 import { urls } from "./urls";
+import { hlsPlayback } from "./hlsPlayer";
 
 export const init = (playerType, streamType, sDRMType, tokenType) => {
     console.log("Initiating player", playerType, streamType, sDRMType, tokenType)
     let hlsPlayer = new Hls(Object.assign({}));
     let player = document.getElementById("video")
+    function handleError(event)  {
+        console.log("I am error Harshada" + event)
+        document.getElementById("error").innerHTML = "harshada"
+    }
 
+    player.addEventListener("error", handleError)
+  
     switch (playerType) {
         case "hls":
-            if (streamType === "hls") {
-                hlsPlayer.loadSource(urls.hls1);
-                hlsPlayer.attachMedia(player);
-                hlsPlayer.startLoad();
-                player.play()
-            }
+            hlsPlayback(player, hlsPlayer,streamType)
             break;
 
         case "native":
@@ -92,7 +94,7 @@ export const init = (playerType, streamType, sDRMType, tokenType) => {
                             }
                         },
                     });
-                   
+
                     shakaPlayer.load(urls.mssWithDRMNoToken).then(() => player.play())
                 } else {
                     shakaPlayer.load(urls.mssWithoutDRMAndToken).then(() => player.play())
@@ -105,6 +107,8 @@ export const init = (playerType, streamType, sDRMType, tokenType) => {
             break;
     }
 
+    
+    
 
 
 

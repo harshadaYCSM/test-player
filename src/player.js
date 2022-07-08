@@ -39,6 +39,7 @@ function Player() {
     return (
         <div className="Player">
             <video className="video" id="video"></video>
+            <div className='errorContainer' id='error'></div>
             <div className='buttonWrapper'>
                 <button onClick={playMp4}>Play mp4 on Native</button>
                 <button onClick={playHls}>Play hls on Native</button><br></br><br></br>
