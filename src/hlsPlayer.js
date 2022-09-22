@@ -25,8 +25,6 @@ export const hlsPlayback = (player, hlsPlayer, streamType) => {
             //
             break;
     }
-
-
 }
 
 

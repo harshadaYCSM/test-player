@@ -5,8 +5,8 @@ import Player
  from './player';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  <React.Suspense>
     <Player />
-  </React.StrictMode>
+  </React.Suspense>
 );
 
