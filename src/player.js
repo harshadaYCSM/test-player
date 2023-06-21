@@ -46,7 +46,7 @@ function Player() {
                 <form onSubmit={playHere}>
                     <label>Player:
                         <select id="player" onChange={handleSelectChange}>
-                            <option value="hls">HLS</option>
+                            <option value="hls">HLS Player</option>
                             <option value="shaka">Shaka</option>
                             <option value="native">Native</option>
                             <option value="dashjs">Dashjs</option>
