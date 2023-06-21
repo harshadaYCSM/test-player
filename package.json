@@ -2,7 +2,7 @@
   "name": "test-player",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://harshadaYCSM.github.io",
+  "homepage": "https://harshadaYCSM.github.io/TestPlayer",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
