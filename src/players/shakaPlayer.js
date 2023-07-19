@@ -1,20 +1,28 @@
 /* eslint-disable no-unused-vars */
-import { urls } from "./urls";
-import { tokens } from "./constants";
+import { urls } from "../common/urls";
+import { tokens } from "../common/constants";
+import Logger from "../common/logger";
+
 export const shakaPlayback = (sDRMType, tokenType, player, streamType) => {
+    const loggerInstance = new Logger();
+
     let shakaPlayer = new window.shaka.Player(player);
     let playUrl = null
-    const handleShakaError = () => {
-        console.log("shaka error")
+    const handleShakaError = (e) => {
+        loggerInstance.log(JSON.stringify("shaka error : " + e.code || e.detail.code))
     }
+    shakaPlayer.addEventListener("error", handleShakaError);
+
 
     switch (streamType) {
 
         case "hls":
             shakaPlayer.load(urls.hls1).then(() => {
                 player.play()
-                shakaPlayer.addEventListener("error", handleShakaError);
             })
+            .catch(e => {
+                handleShakaError(e);
+            }); // onError is executed if the asynchronous load fails.
             break;
 
         case "dash":
@@ -48,7 +56,6 @@ export const shakaPlayback = (sDRMType, tokenType, player, streamType) => {
                     shakaPlayer.configure({
                         drm: {
                             servers: {
-                                // 'com.widevine.alpha': wideVineLicenceUrl,
                                 'com.microsoft.playready': "https://drm-playready-licensing.axtest.net/AcquireLicense"
                             }
                         },
@@ -60,12 +67,24 @@ export const shakaPlayback = (sDRMType, tokenType, player, streamType) => {
                     });
                     playUrl = urls.dashwithToken
                 } else {
+                    shakaPlayer.configure({
+                        drm: {
+                            servers: {
+                                'com.microsoft.playready': "https://cwip-shaka-proxy.appspot.com/no_auth",
+                            }
+                        },
+                    });
                     playUrl = urls.dashPlayreadyWithoutToken
                 }
             } else {
                 playUrl = urls.dashWithoutDRMAndToken
             }
-            shakaPlayer.load(playUrl).then(() => player.play())
+            shakaPlayer.load(playUrl).then(() => {
+                player.play()
+            })
+            .catch(e => {
+                handleShakaError(e);;
+            });
             break;
 
         case "mss":
@@ -81,8 +100,14 @@ export const shakaPlayback = (sDRMType, tokenType, player, streamType) => {
                     });
 
                     shakaPlayer.load(urls.mssWithDRMNoToken).then(() => player.play())
+                    .catch(e => {
+                        handleShakaError(e);;
+                    });
                 } else {
                     shakaPlayer.load(urls.mssWithoutDRMAndToken).then(() => player.play())
+                    .catch(e => {
+                        handleShakaError(e);;
+                    });
                 }
             } else {
                 document.getElementById("error").innerHTML = "Not yet added/ supported"

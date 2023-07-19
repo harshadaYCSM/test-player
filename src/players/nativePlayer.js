@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { urls } from "./urls";
+import { urls } from "../common/urls";
 export const nativePlayback = (player, streamType) => {
 
     switch (streamType) {
@@ -12,11 +12,11 @@ export const nativePlayback = (player, streamType) => {
             break;
 
         case "dash":
-            document.getElementById("error").innerHTML = "Under Construction"
+            document.getElementById("logger").innerHTML = "Under Construction"
             break;
 
         case "mss":
-            document.getElementById("error").innerHTML = "Under Construction"
+            document.getElementById("logger").innerHTML = "Under Construction"
             break;
 
         default:
