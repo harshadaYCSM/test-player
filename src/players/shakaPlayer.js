@@ -1,12 +1,9 @@
 /* eslint-disable no-unused-vars */
 import { urls } from "../common/urls";
 import { tokens } from "../common/constants";
-import Logger from "../common/logger";
+import loggerInstance from "../common/logger";
 
-export const shakaPlayback = (sDRMType, tokenType, player, streamType) => {
-    const loggerInstance = new Logger();
-
-    let shakaPlayer = new window.shaka.Player(player);
+export const shakaPlayback = (sDRMType, tokenType, player, streamType, shakaPlayer) => {
     let playUrl = null
     const handleShakaError = (e) => {
         loggerInstance.log(JSON.stringify("shaka error : " + e.code || e.detail.code))

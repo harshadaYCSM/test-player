@@ -1,13 +1,13 @@
 import '../styles/player.css'
 import { init } from './playerLibrary'
-import Logger from './logger'
+import loggerInstance from "./logger";
 
 function Player() {
     let playerType = ""
     let streamType = ""
     let sDRMType = ""
     let tokenType = ""
-    const loggerInstance = new Logger();
+    let previousPlayer = ""
 
 
     const playMp4 = () => {
@@ -30,29 +30,27 @@ function Player() {
 
     const handleSelectChange = (e) => {
         if (e.target.id === "player") {
-            playerType = e.target.value 
+            playerType = e.target.value
         } else if (e.target.id === "stream") {
             streamType = e.target.value
         } else if (e.target.id === "sDRM") {
             sDRMType = e.target.value
         } else if (e.target.id === "token") {
-            tokenType = e.target.value  
-        } /* else {// default values 
-            playerType = "hls"
-            streamType = "hls"
-            sDRMType = "none"
-            tokenType = "none"
-        } */
+            tokenType = e.target.value
+        }
     }
 
-    const playHere = (event) => {
+    const playStream = (event) => {
+        loggerInstance.log("Previous Player Active : " + previousPlayer)
         event.preventDefault();
-        loggerInstance.log(JSON.stringify("Player:" + playerType + " | " 
-        + "Stream:" + streamType + " | " 
-        + "DRM:" +sDRMType  + " | " 
-        + "Token:" + tokenType))
-        init(playerType, streamType, sDRMType, tokenType)
+        loggerInstance.log(JSON.stringify("Player:" + playerType + " | "
+            + "Stream:" + streamType + " | "
+            + "DRM:" + sDRMType + " | "
+            + "Token:" + tokenType))
+        init(playerType, streamType, sDRMType, tokenType, previousPlayer)
+        previousPlayer = playerType
     }
+
     return (
         <div className="Player">
             <video className="video" id="video"></video>
@@ -61,7 +59,7 @@ function Player() {
                 <button onClick={playMp4}>Play mp4 on Native</button>
                 <button onClick={playHls}>Play hls on Native</button>
                 <button onClick={playHlsLiveOnHls}>Play hls live on Hls</button><br></br><br></br>
-                <form onSubmit={playHere}>
+                <form onSubmit={playStream}>
                     <label>Player:
                         <select id="player" onChange={handleSelectChange} defaultValue="hls">
                             <option value="hls">HLS Player</option>
@@ -98,13 +96,12 @@ function Player() {
                     </label>
                     <br></br><br></br>
                     <label>URL:
-                    <input type="text" id="urls"></input>
+                        <input type="text" id="urls"></input>
                     </label>
                     <input type="submit" value="Submit" />
 
                 </form>
             </div>
-
         </div>
     )
 }

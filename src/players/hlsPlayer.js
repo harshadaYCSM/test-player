@@ -1,10 +1,9 @@
 /* eslint-disable no-unused-vars */
 import { urls } from "../common/urls";
-import Logger from "../common/logger";
+import loggerInstance from "../common/logger";
 
 
 export const hlsPlayback = (player, hlsPlayer, streamType) => {
-    const loggerInstance = new Logger();
 
     hlsPlayer.on(window.Hls.Events.ERROR, (event, data) => {
         loggerInstance.log(JSON.stringify("HLS error : " + data.details + data.type))
@@ -28,6 +27,7 @@ export const hlsPlayback = (player, hlsPlayer, streamType) => {
             hlsPlayer.attachMedia(player);
             hlsPlayer.startLoad();
             player.play()
+            break;
 
         case "dash":
             loggerInstance.log("HLS player connot play mpd streams")

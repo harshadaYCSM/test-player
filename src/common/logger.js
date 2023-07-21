@@ -38,5 +38,6 @@ const Logger = function () {
     };
   };
   
-  export default Logger;
+  let loggerInstance = new Logger()
+  export default loggerInstance;
   
