@@ -1,10 +1,11 @@
 /* eslint-disable no-unused-vars */
 import { urls } from "../common/urls";
 import { tokens } from "../common/constants";
-import loggerInstance from "../common/logger";
+import loggerInstance from "../utility/logger";
 
 export const shakaPlayback = (sDRMType, tokenType, player, streamType, shakaPlayer) => {
     let playUrl = null
+
     const handleShakaError = (e) => {
         loggerInstance.log(JSON.stringify("shaka error : " + e.code || e.detail.code))
     }
@@ -17,9 +18,9 @@ export const shakaPlayback = (sDRMType, tokenType, player, streamType, shakaPlay
             shakaPlayer.load(urls.hls1).then(() => {
                 player.play()
             })
-            .catch(e => {
-                handleShakaError(e);
-            }); // onError is executed if the asynchronous load fails.
+                .catch(e => {
+                    handleShakaError(e);
+                }); // onError is executed if the asynchronous load fails.
             break;
 
         case "dash":
@@ -79,9 +80,9 @@ export const shakaPlayback = (sDRMType, tokenType, player, streamType, shakaPlay
             shakaPlayer.load(playUrl).then(() => {
                 player.play()
             })
-            .catch(e => {
-                handleShakaError(e);;
-            });
+                .catch(e => {
+                    handleShakaError(e);;
+                });
             break;
 
         case "mss":
@@ -97,14 +98,14 @@ export const shakaPlayback = (sDRMType, tokenType, player, streamType, shakaPlay
                     });
 
                     shakaPlayer.load(urls.mssWithDRMNoToken).then(() => player.play())
-                    .catch(e => {
-                        handleShakaError(e);;
-                    });
+                        .catch(e => {
+                            handleShakaError(e);;
+                        });
                 } else {
                     shakaPlayer.load(urls.mssWithoutDRMAndToken).then(() => player.play())
-                    .catch(e => {
-                        handleShakaError(e);;
-                    });
+                        .catch(e => {
+                            handleShakaError(e);;
+                        });
                 }
             } else {
                 document.getElementById("error").innerHTML = "Not yet added/ supported"
