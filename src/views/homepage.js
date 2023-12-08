@@ -1,20 +1,25 @@
 import Player from "../utility/player";
+import '../styles/homepage.css';
 
 function Homepage() {
 
-    let player = Player()
+    let player = new Player()
+
+    // Homepage.jsx
 
     return (
-        <div className="Player">
-            <video className="video" id="video"></video>
+        <div className="player-container">
+            <div className="video-container">
+                <video className="video" id="video"></video>
+            </div>
             <div className='logger' id='logger'></div>
-            <div className='buttonWrapper'>
-                <button onClick={player.playMp4}>Play mp4 on Native</button>
-                <button onClick={player.playHls}>Play hls on Native</button>
-                <button onClick={player.playHlsLiveOnHls}>Play hls live on Hls</button><br></br><br></br>
-                <form onSubmit={player.playStream}>
-                    <label>Player:
-                        <select id="player" onChange={player.handleSelectChange} defaultValue="hls">
+            <div className='control-panel'>
+                <button className="control-button" onClick={player.playMp4}>Play MP4 on Native</button>
+                <button className="control-button" onClick={player.playHls}>Play HLS on Native</button>
+                <button className="control-button" onClick={player.playHlsLiveOnHls}>Play HLS Live on Hls</button>
+                <form className="control-form" onSubmit={player.playStream}>
+                    <label className="control-label">Player:
+                        <select className="control-select" id="player" onChange={player.handleSelectChange} defaultValue="hls">
                             <option value="hls">HLS Player</option>
                             <option value="shaka">Shaka</option>
                             <option value="native">Native</option>
@@ -22,41 +27,42 @@ function Homepage() {
                         </select>
                     </label>
 
-                    <label>   Stream:
-                        <select id="stream" onChange={player.handleSelectChange}>
-                            <option value="hls">hls-m3u8</option>
-                            <option value="dash">dash-mpd</option>
-                            <option value="mss">mss-ism</option>
+                    <label className="control-label">Stream:
+                        <select className="control-select" id="stream" onChange={player.handleSelectChange}>
+                            <option value="hls">HLS-m3u8</option>
+                            <option value="dash">Dash-mpd</option>
+                            <option value="mss">MSS-ISM</option>
                         </select>
                     </label>
 
-                    <label>    Security/DRM:
-                        <select id="sDRM" onChange={player.handleSelectChange}>
+                    <label className="control-label">Security/DRM:
+                        <select className="control-select" id="sDRM" onChange={player.handleSelectChange}>
                             <option value="none">None</option>
                             <option value="widevine">Widevine</option>
                             <option value="playready">PlayReady</option>
                             <option value="aes">AES</option>
-
                         </select>
                     </label>
 
-                    <label>    Token:
-                        <select id="token" onChange={player.handleSelectChange}>
+                    <label className="control-label">Token:
+                        <select className="control-select" id="token" onChange={player.handleSelectChange}>
                             <option value="none">None</option>
                             <option value="customdata">Custom Data</option>
                             <option value="aes">AES-128</option>
                         </select>
                     </label>
-                    <br></br><br></br>
-                    <label>URL:
-                        <input type="text" id="urls"></input>
-                    </label>
-                    <input type="submit" value="Submit" />
 
+                    <label className="control-label">URL:
+                        <input className="control-input" type="text" id="urls"></input>
+                    </label>
+
+                    <input className="control-submit" type="submit" value="Submit" />
                 </form>
             </div>
+            <div className="info-container"></div>
         </div>
-    )
+    );
+
 }
 
 export default Homepage;

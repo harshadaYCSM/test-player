@@ -1,18 +1,15 @@
 /* 
    The videoEvents module is written using the JavaScript Closure concept.
 */
-
 /* 
    Disable eslint warning for undefined variables.
 */
 /* eslint-disable no-undef */
 
-import '../styles/player.css';
 import loggerInstance from "./logger";
 import { hlsPlayback } from "../players/hlsPlayer";
 import { nativePlayback } from "../players/nativePlayer";
 import { shakaPlayback } from "../players/shakaPlayer";
-import * as videoEvents from "./videoEvents";
 import { eventHandlerMap } from '../common/constants';
 
 function Player() {
@@ -23,6 +20,7 @@ function Player() {
     let previousPlayer = "";
     let shakaPlayer = null;
     let hlsPlayer = null;
+    let playerInstance = null;
 
     return {
         /**
@@ -41,9 +39,9 @@ function Player() {
             /*
                Release any previous player and load video tag events.
             */
-            releasePlayer()
+            this.releasePlayer()
                 .then(() => {
-                    loadVideoTagEvents(player);
+                    this.loadVideoTagEvents(player);
 
                     switch (playerType) {
                         case "hls":
@@ -75,9 +73,9 @@ function Player() {
         loadVideoTagEvents: function (video) {
             console.log(video, eventHandlerMap);
             // Uncomment this block if needed.
-            /* eventHandlerMap.map((event) => {
-                video.addEventListener(event, videoEvents.onPlaying);
-            }); */
+            Object.keys(eventHandlerMap).forEach((event) => {
+                video.addEventListener(event, eventHandlerMap[event]);
+            });
         },
 
         /**
@@ -113,6 +111,7 @@ function Player() {
          * @param {Event} e - The event object representing the change in player settings.
          */
         handleSelectChange: function (e) {
+            console.log("Harshada handleSelectChange")
             if (e.target.id === "player") {
                 playerType = e.target.value;
             } else if (e.target.id === "stream") {
@@ -132,8 +131,9 @@ function Player() {
         playStream: function (event) {
             loggerInstance.log("Previous Player Active: " + previousPlayer);
             event.preventDefault();
-            loggerInstance.log(JSON.stringify("Player:" + playerType + " | " + "Stream:" + streamType + " | " + "DRM:" + sDRMType + " | " + "Token:" + tokenType));
-            init(playerType, streamType, sDRMType, tokenType, previousPlayer);
+            loggerInstance.log("Player:" + playerType + " | Stream:" + streamType + " |  DRM:" + sDRMType + " | Token:" + tokenType);
+            playerInstance = new Player(); // Create an instance of the Player object
+            playerInstance.init(playerType, streamType, sDRMType, tokenType, previousPlayer);
             previousPlayer = playerType;
         },
 

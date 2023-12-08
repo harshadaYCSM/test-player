@@ -1,0 +1,128 @@
+/* .video {
+    position: absolute;
+    height: 40vh;
+    left: 2vw;
+    top: 3vh;
+    border-style: groove;
+    border-color: black;
+}
+
+.controlPanel {
+    position: absolute;
+    top: 46vh;
+    left: 2vw;
+    margin: 2%;
+}
+
+.logger {
+    height: 39vh;
+    width: 39vw;
+    max-width: calc(98% - 640px);
+    background-color: #eef7ea;
+    border: 5px solid #53bc14;
+    overflow-y: scroll;
+    position: absolute;
+    top: 3vh;
+    right: 2vw;
+    padding: 0.5%;
+    display: inline-block;
+} */
+
+/* styles.css */
+
+/* styles.css */
+
+/* styles.css */
+
+/* styles.css */
+
+.player-container {
+    max-width: 800px;
+    margin: auto;
+}
+
+
+.video-container {
+    position: absolute;
+    height: 40vh;
+    width: 60vw;
+    left: 2vw;
+    top: 3vh;
+    border-style: groove;
+    border-color: black;
+}
+
+.video {
+    height: 40vh;
+}
+
+.logger {
+    height: 80vh;
+    /* Updated height to accommodate more logs */
+    width: 30vw;
+    /* Adjust width as needed */
+    background-color: #eef7ea;
+    border: 5px solid #53bc14;
+    overflow-y: scroll;
+    position: absolute;
+    top: 3vh;
+    right: 2vw;
+    padding: 0.5%;
+}
+
+.control-panel {
+    position: absolute;
+    top: 46vh;
+    /* Adjust top margin to create space */
+    left: 2vw;
+    width: 60vw;
+    /* Adjust width as needed */
+    padding: 2%;
+    text-align: center;
+}
+
+.control-button {
+    margin: 5px;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.control-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.control-label {
+    margin: 5px;
+    font-size: 14px;
+}
+
+.control-select {
+    margin: 5px;
+    padding: 8px;
+    font-size: 14px;
+}
+
+.control-input {
+    margin: 5px;
+    padding: 8px;
+    font-size: 14px;
+}
+
+.control-submit {
+    margin: 5px;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}

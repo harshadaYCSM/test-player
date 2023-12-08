@@ -7,7 +7,7 @@ export const shakaPlayback = (sDRMType, tokenType, player, streamType, shakaPlay
     let playUrl = null
 
     const handleShakaError = (e) => {
-        loggerInstance.log(JSON.stringify("shaka error : " + e.code || e.detail.code))
+        loggerInstance.log("Shaka error : " + e.code || e.detail.code)
     }
     shakaPlayer.addEventListener("error", handleShakaError);
 

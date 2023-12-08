@@ -20,8 +20,8 @@ const Logger = function () {
    */
 
   this.log = (message) => {
-    console.log(" -- " + message)
-    this.onScreenLog(" -- " + message);
+    console.log("- " + message)
+    this.onScreenLog("- " + message);
   };
 
   /**

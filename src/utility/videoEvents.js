@@ -1,43 +1,20 @@
 import loggerInstance from "./logger";
-/**
- * Calculate video progress percentage
- * @param {string} options - options to the obeject.
- * @event onProgress - // Signal emit: on player progress
- */
+
 export function onProgress(event) {
-    this.errorCounter = 0;
-    /* if(this.setTimeoutOnWaiting){
-        loggerInstance.log(this.MODULE_NAME,"Clearing timeout");
-        clearTimeout(this.setTimeoutOnWaiting);
-        this.setTimeoutOnWaiting = null;
-    } */
-    // Signal.emit('onProgress', { video: event.target });
+    console.log(event.type)
+    // loggerInstance.log("event: " + event.type)
 };
-/**
- * pass the video error details to concerned functions
- * @param {object} error - error object.
- * @event onErrorEvent - // Signal emit: on Player Error occured for videoTag
- */
+
 export function onErrorEvent(event) {
     try {
-        loggerInstance.log(this.MODULE_NAME, "[ztvlib] Player Error occured " + event.target.error + event.target.error.message);
+        loggerInstance.log("[Event] Player Error occured " + event.target.error + event.target.error.message);
     } catch (error) {
-        loggerInstance.log(this.MODULE_NAME, "[ztvlib] Player Error occured ");
+        loggerInstance.log("[Event] Player Error occured ");
     }
-
-    //this.onError(event);
-    this.currentTimeForNative = event.srcElement.currentTime;
-    // Signal.emit('onErrorEvent', { video: event.target });
 }
 
-/**
-  * Handler for video play
-  * @param {object} event - event object.
-  * @event onPlaying - // Signal emit: on Player Playing
-  */
 export function onPlaying(event) {
-    loggerInstance.log(this.MODULE_NAME, "[ztvlib] Player Playing");
-    // Signal.emit('onPlaying', { video: event.target });
+    loggerInstance.log("[Event] Player Playing");
 }
 /**
  * Handler for video paused
@@ -45,8 +22,7 @@ export function onPlaying(event) {
  * @event onPause - // Signal emit: on Player Pause
  */
 export function onPause(event) {
-    loggerInstance.log(this.MODULE_NAME, "[ztvlib] Player Pause");
-    // Signal.emit('onPause', { video: event.target });
+    loggerInstance.log("[Event] Player Pause");
 }
 /**
  * Handler for video ended
@@ -54,8 +30,7 @@ export function onPause(event) {
  * @event onEnded - // Signal emit: on Player Ended
  */
 export function onEnded(event) {
-    loggerInstance.log(this.MODULE_NAME, "[ztvlib] Player Ended");
-    // Signal.emit('onEnded', { video: event.target });
+    loggerInstance.log("[Event] Player Ended");
 }
 /**
  * Handler for video loading
@@ -63,8 +38,7 @@ export function onEnded(event) {
  * @event onloading - // Signal emit: on Player Loaded
  */
 export function onloading(event) {
-    loggerInstance.log(this.MODULE_NAME, "[ztvlib] Player Loaded");
-    // Signal.emit('onloading', { video: event.target });
+    loggerInstance.log("[Event] Player Loaded");
 }
 /**
  * Handler for video buffering for shaka
@@ -72,23 +46,9 @@ export function onloading(event) {
  * @event player:onBuffering - // Signal emit: on Player Buffering
  */
 export function onBuffering(event) {
-    this.isBuffering = event.buffering;
-    this.onWaitingStartTime = this.nativePlayer.currentTime;
-    loggerInstance.log(this.MODULE_NAME, "[ztvlib] Player Buffering " + this.isBuffering);
-    if (this.isBuffering) {
-        //this.checkLowNetwork();
-        // Signal.emit('player:onBuffering', { video: event.target });
-        this.checkInternetConnectivity();
-    } else {
-        loggerInstance.log(this.MODULE_NAME, "Clearing timeout onBuffering");
-        clearTimeout(this.setTimeoutOnWaiting);
-        this.setTimeoutOnWaiting = null;
-    }
-    if (this.features.ENABLE_BUFFERING_PERCANTAGE) {
-        this.showShakaBufferPercentage("onBuffering");
-    } else {
-        loggerInstance.log(this.MODULE_NAME, "buffer percent feature is disabled in features");
-    }
+
+    loggerInstance.log("[Event] Player Buffering " + this.isBuffering);
+
 }
 /**
  * Handler for video seeking
@@ -96,14 +56,7 @@ export function onBuffering(event) {
  * @event onSeeking - // Signal emit: on Player Seeking
  */
 export function onSeeking(event) {
-    loggerInstance.log(this.MODULE_NAME, "[ztvlib] Player Seeking");
-    if (this.setTimeoutOnWaiting) {
-        // loggerInstance.log(this.MODULE_NAME,"Clearing timeout");
-        // clearTimeout(this.setTimeoutOnWaiting);
-        // this.setTimeoutOnWaiting = null;
-        this.checkInternetConnectivity();
-    }
-    // Signal.emit('onSeeking', { video: event.target });
+    loggerInstance.log("[Event] Player Seeking");
 }
 
 /**
@@ -112,18 +65,7 @@ export function onSeeking(event) {
  * @event onStalled - // Signal emit: on Player Stalled
  */
 export function onStalled(event) {
-    loggerInstance.log(this.MODULE_NAME, "[ztvlib] Player Stalled");
-    // Signal.emit('onStalled', { video: event.target });
-    this.onWaitingStartTime = event.target.currentTime;
-    if (window.PRODUCT === "sam") {
-        if (this.setTimeoutOnWaiting) {
-            loggerInstance.log(this.MODULE_NAME, "Clearing timeout");
-            clearTimeout(this.setTimeoutOnWaiting);
-            this.setTimeoutOnWaiting = null;
-        }
-    } else {
-        this.checkInternetConnectivity();
-    }
+    loggerInstance.log("[Event] Player Stalled");
 }
 /**
  * Handler for video waiting
@@ -131,18 +73,8 @@ export function onStalled(event) {
  * @event onWaiting - // Signal emit: on Player Waiting
  */
 export function onWaiting(event) {
-    loggerInstance.log(this.MODULE_NAME, "[ztvlib] Player Waiting ");
-    this.isBuffering = true;
-    this.bufferedPercent = 0;
-    this.onWaitingStartTime = event.target.currentTime;
-    this.checkInternetConnectivity();
-    if (this.features.ENABLE_BUFFERING_PERCANTAGE) {
-        this.showNativeBufferPercentage("onWaiting");
-    } else {
-        loggerInstance.log(this.MODULE_NAME, "buffer percent feature is disabled in features");
-    }
-    // Signal.emit('onWaiting', { video: event.target });
-    // Signal.emit('player:onBuffering', { video: event.target });
+    loggerInstance.log("[Event] Player Waiting ");
+
 }
 
 /**
@@ -151,8 +83,7 @@ export function onWaiting(event) {
  * @event onAbort - // Signal emit: on abort
  */
 export function onAbort(event) {
-    loggerInstance.log(this.MODULE_NAME, "[ztvlib] Player Aborted");
-    // Signal.emit('onAbort', { video: event.target });
+    loggerInstance.log("[Event] Player Aborted");
 }
 
 /**
@@ -161,14 +92,8 @@ export function onAbort(event) {
  * @event onCanPlay - // Signal emit: Player Can Play
  */
 export function onCanPlay(event) {
-    loggerInstance.log(this.MODULE_NAME, "[ztvlib] Player Can Play");
-    this.isBuffering = false;
-    if (this.features.ENABLE_BUFFERING_PERCANTAGE) {
-        this.showNativeBufferPercentage("onCanPlay");
-    } else {
-        loggerInstance.log(this.MODULE_NAME, "buffer percent feature is disabled in features");
-    }
-    // Signal.emit('onCanPlay', { video: event.target });
+    loggerInstance.log("[Event] Player Can Play");
+
 }
 
 /**
@@ -177,22 +102,15 @@ export function onCanPlay(event) {
  * @event onCanPlayThrough - // Signal emit: Player Can Play Through
  */
 export function onCanPlayThrough(event) {
-    loggerInstance.log(this.MODULE_NAME, "[ztvlib] Player Can Play Through");
-    this.isBuffering = false;
-    if (this.features.ENABLE_BUFFERING_PERCANTAGE) {
-        this.showNativeBufferPercentage("onCanPlayThrough");
-    } else {
-        loggerInstance.log(this.MODULE_NAME, "buffer percent feature is disabled in features");
-    }
-    // Signal.emit('onCanPlayThrough', { video: event.target });
+    loggerInstance.log("[Event] Player Can Play Through");
+
 }
 /**
  * Handler for video duration change
  * @param {object} event - event object.
  */
 export function onDurationChange(event) {
-    //loggerInstance.log(this.MODULE_NAME, "[ztvlib] Player Video duration changed");
-    // Signal.emit('onCanPlayThrough', { video: event.target });
+    //loggerInstance.log( "[Event] Player Video duration changed");
 }
 /**
  * Handler for video onEmptied
@@ -200,8 +118,7 @@ export function onDurationChange(event) {
  * @event onEmptied - // Signal emit: Player Video Emptied
  */
 export function onEmptied(event) {
-    loggerInstance.log(this.MODULE_NAME, "[ztvlib] Player Video Emptied");
-    // Signal.emit('onEmptied', { video: event.target });
+    loggerInstance.log("[Event] Player Video Emptied");
 }
 /**
  * Handler for video onLoadedMetadata
@@ -209,8 +126,7 @@ export function onEmptied(event) {
  * @event onLoadedMetadata - // Signal emit: Player MetaData Loaded
  */
 export function onLoadedMetadata(event) {
-    loggerInstance.log(this.MODULE_NAME, "[ztvlib] Player MetaData Loaded");
-    // Signal.emit('onLoadedMetadata', { video: event.target });
+    loggerInstance.log("[Event] Player MetaData Loaded");
 }
 /**
  * Handler for video onLoadStart
@@ -218,8 +134,7 @@ export function onLoadedMetadata(event) {
  * @event onLoadStart - // Signal emit: Player Load Started
  */
 export function onLoadStart(event) {
-    loggerInstance.log(this.MODULE_NAME, "[ztvlib] Player Load Started");
-    // Signal.emit('onLoadStart', { video: event.target });
+    loggerInstance.log("[Event] Player Load Started");
 }
 /**
  * Handler for video onPlay
@@ -227,8 +142,7 @@ export function onLoadStart(event) {
  * @event onPlay - // Signal emit: Player Play
  */
 export function onPlay(event) {
-    loggerInstance.log(this.MODULE_NAME, "[ztvlib] Player Play");
-    // Signal.emit('onPlay', { video: event.target });
+    loggerInstance.log("[Event] Player Play");
 }
 /**
  * Handler for video onRateChange
@@ -236,8 +150,7 @@ export function onPlay(event) {
  * @event onRateChange - // Signal emit: Player Playback speed rate Changed
  */
 export function onRateChange(event) {
-    loggerInstance.log(this.MODULE_NAME, "[ztvlib] Player Playback speed rate Changed");
-    // Signal.emit('onRateChange', { video: event.target });
+    loggerInstance.log("[Event] Player Playback speed rate Changed");
 }
 /**
  * Handler for video onSeeked
@@ -245,8 +158,7 @@ export function onRateChange(event) {
  * @event onSeeked - // Signal emit: Player Seeked
  */
 export function onSeeked(event) {
-    loggerInstance.log(this.MODULE_NAME, "[ztvlib] Player Seeked");
-    // Signal.emit('onSeeked', { video: event.target });
+    loggerInstance.log("[Event] Player Seeked");
 }
 /**
  * Handler for video onSuspend
@@ -254,10 +166,7 @@ export function onSeeked(event) {
  * @event onSuspend - // Signal emit: Player Suspended
  */
 export function onSuspend(event) {
-    loggerInstance.log(this.MODULE_NAME, "[ztvlib] Player Suspended");
-    this.onWaitingStartTime = event.target.currentTime;
-    this.checkInternetConnectivity();
-    // Signal.emit('onSuspend', { video: event.target });
+    loggerInstance.log("[Event] Player Suspended");
 }
 /**
  * Handler for video onTimeupdate
@@ -265,15 +174,7 @@ export function onSuspend(event) {
  * @event onTimeupdate - // Signal emit: Player Time update
  */
 export function onTimeupdate(event) {
-    //loggerInstance.log(this.MODULE_NAME, "[ztvlib] Player Time update " + parseInt(this.onWaitingStartTime, 10) + "  " +  parseInt(event.target.currentTime, 10));
-    let isGreater = event.target.currentTime - this.onWaitingStartTime > 1;
-    if (this.onWaitingStartTime != undefined && isGreater && this.setTimeoutOnWaiting) {
-        loggerInstance.log(this.MODULE_NAME, "Clearing timeout onTimeUpdate");
-        loggerInstance.log(this.MODULE_NAME, "[ztvlib] Player Time update " + this.onWaitingStartTime + "  " + event.target.currentTime);
-        clearTimeout(this.setTimeoutOnWaiting);
-        this.setTimeoutOnWaiting = null;
-    }
-    // Signal.emit('onTimeupdate', { video: event.target });
+    //loggerInstance.log( "[Event] Player Time update " + parseInt(this.onWaitingStartTime, 10) + "  " +  parseInt(event.target.currentTime, 10));
 }
 /**
  * Handler for video onVolumechange
@@ -281,6 +182,5 @@ export function onTimeupdate(event) {
  * @event onVolumechange - // Signal emit: on volume changed
  */
 export function onVolumechange(event) {
-    loggerInstance.log(this.MODULE_NAME, "[ztvlib] Player Volume Changed");
-    // Signal.emit('onVolumechange', { video: event.target });
+    loggerInstance.log("[Event] Player Volume Changed");
 }

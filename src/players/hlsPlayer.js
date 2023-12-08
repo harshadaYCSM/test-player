@@ -8,8 +8,7 @@ export const hlsPlayback = (player, streamType, hlsPlayer) => {
     loggerInstance.log("Initiating hls player")
 
     hlsPlayer.on(window.Hls.Events.ERROR, (event, data) => {
-        loggerInstance.log(JSON.stringify("HLS error : " + data.details + data.type))
-
+        loggerInstance.log("HLS error : " + data.details + data.type)
     })
     switch (streamType) {
 
