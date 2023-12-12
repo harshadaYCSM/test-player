@@ -10,6 +10,7 @@ import loggerInstance from "./logger";
 import { hlsPlayback } from "../players/hlsPlayer";
 import { nativePlayback } from "../players/nativePlayer";
 import { shakaPlayback } from "../players/shakaPlayer";
+import { dashjsPlayback } from "../players/dashPlayer";
 import { eventHandlerMap } from '../common/constants';
 
 function Player() {
@@ -20,6 +21,7 @@ function Player() {
     let previousPlayer = "";
     let shakaPlayer = null;
     let hlsPlayer = null;
+    let dashjsPlayer = null;
     let playerInstance = null;
 
     return {
@@ -46,7 +48,7 @@ function Player() {
                     switch (playerType) {
                         case "hls":
                             hlsPlayer = new Hls(Object.assign({}));
-                            hlsPlayback(player, streamType, hlsPlayer);
+                            hlsPlayback(player, streamType, sDRMType, tokenType, hlsPlayer);
                             break;
 
                         case "native":
@@ -56,6 +58,11 @@ function Player() {
                         case "shaka":
                             shakaPlayer = new window.shaka.Player(player);
                             shakaPlayback(sDRMType, tokenType, player, streamType, shakaPlayer);
+                            break;
+
+                        case "dashjs":
+                            dashjsPlayer = dashjs.MediaPlayer().create();
+                            dashjsPlayback(sDRMType, tokenType, player, streamType, dashjsPlayer);
                             break;
 
                         default:
@@ -131,10 +138,29 @@ function Player() {
         playStream: function (event) {
             loggerInstance.log("Previous Player Active: " + previousPlayer);
             event.preventDefault();
-            loggerInstance.log("Player:" + playerType + " | Stream:" + streamType + " |  DRM:" + sDRMType + " | Token:" + tokenType);
+
             playerInstance = new Player(); // Create an instance of the Player object
+
+            // hard coding for now
+            playerType = playerType === "" ? event.target[0].value : playerType
+            streamType = streamType === "" ? event.target[1].value : streamType
+            sDRMType = sDRMType === "" ? event.target[2].value : sDRMType
+            tokenType = tokenType === "" ? event.target[3].value : tokenType
+
+            loggerInstance.log("Player:" + playerType + " | Stream:" + streamType + " |  DRM:" + sDRMType + " | Token:" + tokenType);
+
             playerInstance.init(playerType, streamType, sDRMType, tokenType, previousPlayer);
             previousPlayer = playerType;
+        },
+
+
+
+        setDefaultValues: function (event) {
+            // hard coding for now
+            playerType = playerType === "" ? event.target[0].value : playerType
+            streamType = streamType === "" ? event.target[1].value : streamType
+            sDRMType = sDRMType === "" ? event.target[2].value : sDRMType
+            tokenType = tokenType === "" ? event.target[3].value : tokenType
         },
 
         /**

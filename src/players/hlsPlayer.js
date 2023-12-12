@@ -4,7 +4,7 @@ import { urls } from "../common/urls";
 import loggerInstance from "../utility/logger";
 
 
-export const hlsPlayback = (player, streamType, hlsPlayer) => {
+export const hlsPlayback = (player, streamType, sDRMType, tokenType, hlsPlayer) => {
     loggerInstance.log("Initiating hls player")
 
     hlsPlayer.on(window.Hls.Events.ERROR, (event, data) => {
@@ -13,8 +13,8 @@ export const hlsPlayback = (player, streamType, hlsPlayer) => {
     switch (streamType) {
 
         case "hls":
-            let hlsUrl = document.getElementById("urls").value ?
-                document.getElementById("urls").value : urls.hls1
+            let hlsUrl = urls[streamType][sDRMType][tokenType]
+            console.log("HLS URL :", hlsUrl)
             hlsPlayer.loadSource(hlsUrl);
             hlsPlayer.attachMedia(player);
             hlsPlayer.startLoad();
