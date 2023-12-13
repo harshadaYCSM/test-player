@@ -7,36 +7,19 @@ const handleShakaError = (e) => {
     loggerInstance.log("Shaka error: " + (e.code || e.detail.code));
 };
 
-const configureShakaPlayerForDashStream = (streamType, sDRMType, tokenType, shakaPlayer) => {
+const configureDrm = (streamType, sDRMType, tokenType, shakaPlayer) => {
     const config = {
         drm: {
             servers: {}
         }
     };
 
+    console.log("License URL : ", licenseUrls[streamType][sDRMType][tokenType])
+
     if (sDRMType === "widevine") {
-        console.log("MUMMY license : ", licenseUrls[streamType][sDRMType][tokenType])
-        // config.drm.servers['com.widevine.alpha'] = licenseUrls[streamType][sDRMType][tokenType]
-
-        shakaPlayer.configure({
-            drm: {
-                servers: {
-                    'com.widevine.alpha': licenseUrls[streamType][sDRMType][tokenType],
-                }
-            },
-        });
-
+        config.drm.servers['com.widevine.alpha'] = licenseUrls[streamType][sDRMType][tokenType]
     } else if (sDRMType === "playready") {
-        console.log("AAAAA", licenseUrls[streamType][sDRMType][tokenType])
-        // config.drm.servers['com.microsoft.playready'] = licenseUrls[streamType][sDRMType][tokenType]
-
-        shakaPlayer.configure({
-            drm: {
-                servers: {
-                    'com.microsoft.playready': licenseUrls[streamType][sDRMType][tokenType],
-                }
-            },
-        });
+        config.drm.servers['com.microsoft.playready'] = licenseUrls[streamType][sDRMType][tokenType]
     }
 
     shakaPlayer.configure(config);
@@ -54,18 +37,6 @@ const configureShakaPlayerForDashStream = (streamType, sDRMType, tokenType, shak
     return shakaPlayer;
 };
 
-const configureShakaPlayerForMssStream = (sDRMType, tokenType, shakaPlayer) => {
-    if (tokenType === "customData" && sDRMType === "playready") {
-        shakaPlayer.configure({
-            drm: {
-                servers: {
-                    'com.microsoft.playready': "http://playready.directtaps.net/pr/svc/rightsmanager.asmx?"
-                }
-            },
-        });
-    }
-};
-
 const loadAndPlay = (player, shakaPlayer, playUrl) => {
     console.log("URL combo:", urls)
     shakaPlayer.load(playUrl).then(() => {
@@ -73,42 +44,9 @@ const loadAndPlay = (player, shakaPlayer, playUrl) => {
     }).catch(handleShakaError);
 };
 
-const getVideoUrl = () => {
-    let url = "";
-
-
-}
-
 export const shakaPlayback = (sDRMType, tokenType, player, streamType, shakaPlayer) => {
-    const errorElement = document.getElementById("error");
     let videoUrl = urls[streamType][sDRMType][tokenType];
     console.log("VIDEO URL : ", videoUrl)
-
-    switch (streamType) {
-        case "hls":
-            configureShakaPlayerForDashStream(streamType, sDRMType, tokenType, shakaPlayer);
-            loadAndPlay(player, shakaPlayer, videoUrl);
-            break;
-
-        case "dash":
-            // const dashUrl = (sDRMType) ? urls.dashwithToken : urls.dashWithoutDRMAndToken;
-            configureShakaPlayerForDashStream(streamType, sDRMType, tokenType, shakaPlayer);
-            loadAndPlay(player, shakaPlayer, videoUrl);
-            break;
-
-        case "mss":
-            if (sDRMType === "playready" || sDRMType === "none") {
-                // const mssUrl = (tokenType === "customData") ? urls.mssWithDRMNoToken : urls.mssWithoutDRMAndToken;
-
-                configureShakaPlayerForMssStream(sDRMType, tokenType, shakaPlayer);
-                loadAndPlay(player, shakaPlayer, videoUrl);
-            } else {
-                errorElement.innerHTML = "Not yet added/supported";
-            }
-            break;
-
-        default:
-            //
-            break;
-    }
+    configureDrm(streamType, sDRMType, tokenType, shakaPlayer);
+    loadAndPlay(player, shakaPlayer, videoUrl);
 };
