@@ -6,7 +6,7 @@ The React Stream Testing App is a versatile tool that allows users to test vario
 
 Live Demo <a href="https://harshadaycsm.github.io/test-player/">Here</a>
 
-<img src="test-player.png"></img>
+<img src="test-player.png" height="300px"></img>
 
 ## Features
 
