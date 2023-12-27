@@ -5,6 +5,9 @@
 The React Stream Testing App is a versatile tool that allows users to test various combinations of streaming protocols, players, DRM solutions, and tokens. Whether you're working with HLS, DASH, Shaka Player, native players, or different DRM providers, this app provides a convenient interface for testing and validating your streaming configurations.
 
 Live Demo <a href="https://harshadaycsm.github.io/test-player/">Here</a>
+
+<img src="test-player.png"></img>
+
 ## Features
 
 - **Stream Protocols:**
