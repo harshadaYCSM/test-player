@@ -204,6 +204,9 @@ function Player() {
          */
         releasePlayer: function () {
             loggerInstance.log("Releasing player");
+            Object.keys(eventHandlerMap).forEach((event) => {
+                video.removeEventListener(event, eventHandlerMap[event]);
+            });
             player.src = "";
             switch (previousPlayer) {
                 case "hls":

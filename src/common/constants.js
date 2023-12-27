@@ -7,11 +7,6 @@ export const tokens = {
 
 }
 
-export const licenceUrls = {
-    wideVineLicenceUrlWithCustomData: "",
-    playReadyLicenceUrl: ""
-}
-
 export const eventHandlerMap = {
     'playing': videoEvents.onPlaying,
     'pause': videoEvents.onPause,

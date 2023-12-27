@@ -14,11 +14,12 @@ const configureDrm = (streamType, sDRMType, tokenType, shakaPlayer) => {
         }
     };
 
-    console.log("License URL : ", licenseUrls[streamType][sDRMType][tokenType])
 
     if (sDRMType === "widevine") {
+        console.log("License URL : ", licenseUrls[streamType][sDRMType][tokenType])
         config.drm.servers['com.widevine.alpha'] = licenseUrls[streamType][sDRMType][tokenType]
     } else if (sDRMType === "playready") {
+        console.log("License URL : ", licenseUrls[streamType][sDRMType][tokenType])
         config.drm.servers['com.microsoft.playready'] = licenseUrls[streamType][sDRMType][tokenType]
     }
 
@@ -45,6 +46,7 @@ const loadAndPlay = (player, shakaPlayer, playUrl) => {
 };
 
 export const shakaPlayback = (sDRMType, tokenType, player, streamType, shakaPlayer) => {
+    loggerInstance.log("Initiating shaka player")
     let videoUrl = urls[streamType][sDRMType][tokenType];
     console.log("VIDEO URL : ", videoUrl)
     configureDrm(streamType, sDRMType, tokenType, shakaPlayer);
