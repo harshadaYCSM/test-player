@@ -52,3 +52,12 @@ Make sure you have the following installed:
    ```bash
    npm start
 
+
+# TODO:
+1. Manual Mode in which user will just select player, but would be able to insert their own Video stream URL, license URL or token manually.
+  
+2. Video bitrate diplay and change option
+
+3. Subtitle change
+
+4. Audio language change
