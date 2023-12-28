@@ -1,5 +1,5 @@
 /* 
-   The videoEvents module is written using the JavaScript Closure concept.
+   The Player module is written using the JavaScript Closure concept.
 */
 /* 
    Disable eslint warning for undefined variables.
@@ -122,7 +122,6 @@ function Player() {
          * @param {Event} e - The event object representing the change in player settings.
          */
         handleSelectChange: function (e) {
-            console.log("Harshada handleSelectChange")
             if (e.target.id === "player") {
                 playerType = e.target.value;
             } else if (e.target.id === "stream") {
@@ -174,8 +173,6 @@ function Player() {
          */
         handleError: function (event) {
             loggerInstance.log("Player error occurred: " + JSON.stringify(event.target.error));
-            // Uncomment this line if needed.
-            // document.getElementById("error").innerHTML = "harshada" + event.target.error;
         },
 
         /**
