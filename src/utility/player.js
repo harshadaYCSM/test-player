@@ -24,6 +24,8 @@ function Player() {
     let dashjsPlayer = null;
     let playerInstance = null;
 
+    // TODO: on this branch selects are changing when arrow keys are pressed along with navigation. Needs fix.
+
     return {
         /**
          * Initialize the player with specified parameters.
