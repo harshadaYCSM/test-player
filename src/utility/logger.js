@@ -31,6 +31,12 @@ const Logger = function () {
   this.onScreenLog = (message) => {
     document.getElementById("logger").innerHTML += "<br>" + message;
   };
+
+  this.clearConsole = () => {
+    document.getElementById("logger").innerHTML = "<br>";
+  }
+
+
 };
 
 let loggerInstance = new Logger()

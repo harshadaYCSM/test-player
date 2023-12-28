@@ -13,8 +13,10 @@ function Homepage() {
         <div className='logger' id='logger'></div>
         <div className='control-panel'>
             <button className="control-button" onClick={player.playMp4}>Play MP4 on Native</button>
-            {/* <button className="control-button" onClick={player.playHls}>Play HLS on Native</button> */}
             <button className="control-button" onClick={player.playHlsLiveOnHls}>Play HLS Live on Hls</button>
+            <button className="control-button" onClick={player.clearConsole}>Clear Console</button>
+
+
             <form className="control-form" onSubmit={player.playStream}>
                 <label className="control-label">Player:
                     <select className="control-select" id="player" onChange={player.handleSelectChange} defaultValue="hls">

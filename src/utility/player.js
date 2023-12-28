@@ -85,6 +85,10 @@ function Player() {
             });
         },
 
+        clearConsole: function () {
+            loggerInstance?.clearConsole()
+        },
+
         /**
          * Play a sample MP4 video.
          */
