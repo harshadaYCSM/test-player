@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars */
-import { urls } from "../common/urls";
 export const nativePlayback = (player, streamType) => {
 
     switch (streamType) {

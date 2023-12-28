@@ -7,7 +7,10 @@ export function onProgress(event) {
 
 export function onErrorEvent(event) {
     try {
-        loggerInstance.log("[Event] Player Error occured " + event.target.error + event.target.error.message);
+        loggerInstance.log("[Event] Player Error occured :" +
+            event.target.error +
+            "Message: " + event.target.error.message +
+            "Code: " + event.target.error.code);
     } catch (error) {
         loggerInstance.log("[Event] Player Error occured ");
     }
